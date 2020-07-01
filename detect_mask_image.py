@@ -104,8 +104,8 @@ for index in range(len(onlyfiles)):
 			# display the label and bounding box rectangle on the output
 			# frame
 			if mask > withoutMask:
-				cropped = image[startY:endY, startX:endX]
-				nameFile = "with_mask{}.jpg".format(index)
+				cropped = image[int(startY*0.9):int(endY*1.1), int(startX*0.9):int(endX*1.1)]
+				nameFile = "{}.png".format(index)
 				cv2.imwrite(nameFile, cropped)
 			cv2.putText(image, label, (startX, startY - 10),
 				cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 2)
