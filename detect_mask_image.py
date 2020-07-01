@@ -36,7 +36,7 @@ net = cv2.dnn.readNet(prototxtPath, weightsPath)
 print("[INFO] loading face mask detector model...")
 model = load_model(args["model"])
 
-
+countIndex = 0
 folder = "images"
 
 onlyfiles = [f for f in os.listdir(
@@ -50,6 +50,7 @@ for index in range(len(onlyfiles)):
 	print(folder + "/" + onlyfiles[index])
 	image = cv2.imread(folder + "/" + onlyfiles[index])
 	orig = image.copy()
+	image1 = image.copy()
 	(h, w) = image.shape[:2]
 	try:
 		
@@ -104,21 +105,22 @@ for index in range(len(onlyfiles)):
 				# display the label and bounding box rectangle on the output
 				# frame
 				if mask > withoutMask:
-					cropped = orig[int(startY*0.9):int(endY*1.1), int(startX*0.9):int(endX*1.1)]
-					nameFile = "{}.png".format(index)
+					cropped = image1[int(startY*0.9):int(endY*1.1), int(startX*0.9):int(endX*1.1)]
+					nameFile = "{}.png".format(countIndex)
 					cv2.imwrite(nameFile, cropped)
+					countIndex = countIndex + 1
 				cv2.putText(image, label, (startX, startY - 10),
 					cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 2)
 				cv2.rectangle(image, (startX, startY), (endX, endY), color, 2)
-				cv2.imwrite('done{}.png'.format(index), image)
+				cv2.imwrite('done{}.jpg'.format(index), image)
 			else:
-				cv2.imwrite('notdone{}.png'.format(index), image)
+				cv2.imwrite('notdone{}.jpg'.format(index), image)
 		# show the output image
 		cv2.imshow("Output", image)
-		key = cv2.waitKey(3000)
+		key = cv2.waitKey(1000)
 		if key == 27:
 			cv2.destroyAllWindows()
 			break
 		
 	except:
-		cv2.imwrite('erro{}'.format(index), image)
+		cv2.imwrite('erro{}.jpg'.format(index), image)
