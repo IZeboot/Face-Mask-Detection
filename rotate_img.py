@@ -13,7 +13,7 @@ if not os.path.exists(sys.argv[1]):
     sys.exit(0)
     
 folder = sys.argv[1]
-for root, dirs, files in os.walk("images"):
+for root, dirs, files in os.walk(folder):
     for index in range(len(files)):
         if files[index].endswith(".png"):
             path = os.path.dirname(os.path.join(root, files[index]))+ "/rotate30"
