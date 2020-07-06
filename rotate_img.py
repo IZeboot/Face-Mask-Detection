@@ -4,7 +4,15 @@ import matplotlib.pyplot as plt
 import os
 import sys
 
-folder = "images"
+if len(sys.argv) < 2:
+    print("pls input folder: python rotate_img.py [name_folder] ")
+    sys.exit(0)
+
+if not os.path.exists(sys.argv[1]):
+    print("pls input folder: python rotate_img.py [name_folder] ")
+    sys.exit(0)
+    
+folder = sys.argv[1]
 for root, dirs, files in os.walk("images"):
     for index in range(len(files)):
         if files[index].endswith(".png"):
